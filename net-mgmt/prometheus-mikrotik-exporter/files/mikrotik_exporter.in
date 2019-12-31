@@ -1,0 +1,58 @@
+#!/bin/sh
+
+# $FreeBSD$
+#
+# vim: ts=2 et
+#
+# PROVIDE: mikrotik_exporter
+# REQUIRE: DAEMON NETWORKING
+# KEYWORD: shutdown
+#
+# Add these lines to /etc/rc.conf.local or /etc/rc.conf
+# to enable this service:
+#
+# mikrotik_exporter_enable (bool):	Set to NO by default.
+# 					Set it to YES to enable mikrotik-exporter.
+# mikrotik_exporter_config (path):	Set to %%PREFIX%%/etc/%%CONF_FILE%%
+# 					by default.
+# mikrotik_exporter_log_file (path):    Mikrotik-exporter log file
+# 					Default: /var/log/mikrotik_exporter.log
+# mikrotik_exporter_user (user):	Set user to run mikrotik_exporter.
+# 					Default is "nobody".
+# mikrotik_exporter_group (group):	Set group to run mikrotik_exporter.
+# 					Default is "nobody".
+
+. /etc/rc.subr
+
+name=mikrotik_exporter
+rcvar=mikrotik_exporter_enable
+
+load_rc_config ${name}
+
+: ${mikrotik_exporter_enable:="NO"}
+: ${mikrotik_exporter_config="%%PREFIX%%/etc/%%CONF_FILE%%"}
+: ${mikrotik_exporter_log_file=/var/log/mikrotik_exporter.log}
+: ${mikrotik_exporter_args:="-config-file ${mikrotik_exporter_config}"}
+: ${mikrotik_exporter_user:="nobody"}
+: ${mikrotik_exporter_group:="nobody"}
+
+pidfile=/var/run/mikrotik_exporter.pid
+procname="/usr/local/bin/mikrotik-exporter"
+command="/usr/sbin/daemon"
+command_args="-p ${pidfile} ${procname} ${mikrotik_exporter_args} >> ${mikrotik_exporter_log_file}"
+
+required_files=${mikrotik_exporter_config}
+
+start_precmd=mikrotik_exporter_startprecmd
+
+mikrotik_exporter_startprecmd()
+{
+        if [ ! -e ${pidfile} ]; then
+                install -o ${mikrotik_exporter_user} -g ${mikrotik_exporter_group} /dev/null ${pidfile};
+        fi
+
+        if [ ! -e ${mikrotik_exporter_log_file} ]; then
+                install -o ${mikrotik_exporter_user} -g ${mikrotik_exporter_group} /dev/null ${mikrotik_exporter_log_file};
+        fi
+}
+run_rc_command "$1"
