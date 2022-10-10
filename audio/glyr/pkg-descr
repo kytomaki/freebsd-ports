@@ -1,0 +1,23 @@
+Glyr is a search engine for music related metadata
+
+It comes both in a command-line interface tool and as a C library,
+both with an easy to use interface.  The sort of metadata glyr is
+searching (and downloading) is usually the data you see in your
+musicplayer. And indeed, originally it was written to serve as
+internally library for a musicplayer, but has been extended to work
+as a standalone program which is able to download:
+
+Getter		Description
+cover		Coverart (front images supported only)
+lyrics		Songtext
+artistphotos	Photos of a certain band (press or live)
+artistbio	Artist biography from various sites
+review		album reviews from various sites
+albumlist	A list of albums from a specific artist.
+tags		Tags, either related to artist, album or title
+relations	links to wikipedia, myspace, musicbrainz...
+similarartists	similar artists
+similarsongs	similar songs
+tracklist	tracklists of an album
+guitartabs	guitartabs in textual form
+backdrops	Large artist photos, suitable for backgrounds
