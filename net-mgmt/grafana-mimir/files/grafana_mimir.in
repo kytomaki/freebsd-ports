@@ -32,7 +32,7 @@ load_rc_config ${name}
 : ${grafana_mimir_enable:="NO"}
 : ${grafana_mimir_config="%%PREFIX%%/etc/%%CONF_FILE%%"}
 : ${grafana_mimir_log_file=/var/log/grafana-mimir.log}
-: ${grafana_mimir_args:="-config.file ${grafana_mimir_config}"}
+: ${grafana_mimir_args:="-config.file ${grafana_mimir_config} -activity-tracker.filepath /var/db/mimir/metrics-activity.log"}
 : ${grafana_mimir_user:="nobody"}
 : ${grafana_mimir_group:="nobody"}
 
@@ -40,6 +40,8 @@ pidfile=/var/run/grafana_mimir.pid
 procname="%%PREFIX%%/bin/mimir"
 command="/usr/sbin/daemon"
 command_args="-p ${pidfile} ${procname} ${grafana_mimir_args} >> ${grafana_mimir_log_file}"
+
+grafana_mimir_chdir="/var/db/mimir"
 
 required_files=${grafana_mimir_config}
 
