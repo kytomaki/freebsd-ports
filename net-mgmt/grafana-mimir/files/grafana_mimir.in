@@ -32,7 +32,7 @@ load_rc_config ${name}
 : ${grafana_mimir_enable:="NO"}
 : ${grafana_mimir_config="%%PREFIX%%/etc/%%CONF_FILE%%"}
 : ${grafana_mimir_log_file=/var/log/grafana-mimir.log}
-: ${grafana_mimir_args:="-config-file ${grafana_mimir_config}"}
+: ${grafana_mimir_args:="-config.file ${grafana_mimir_config}"}
 : ${grafana_mimir_user:="nobody"}
 : ${grafana_mimir_group:="nobody"}
 
