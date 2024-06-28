@@ -16,7 +16,7 @@ LIB_DEPENDS= 	libcurl.so:ftp/curl \
 		libglib-2.0.so:devel/glib20
 BUILD_DEPENDS=	${MY_DEPENDS}
 
-USES=		cmake ninja sqlite gettext-runtime
+USES=		cmake ninja sqlite gettext-runtime pkgconfig
 USE_LDCONFIG=	yes
 USE_GCC=	yes
 
