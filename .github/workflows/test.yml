@@ -1,0 +1,53 @@
+name: Test
+
+on: [push]
+
+jobs:
+  matrix-output:
+    runs-on: ubuntu-latest
+    name: Create matrix based on directories
+    outputs:
+      matrix: ${{ steps.matrix.outputs.matrix }}
+    steps:
+    - uses: actions/checkout@v4
+    - name: Create matrix
+      id: matrix
+      run: |
+        echo "matrix=$(jq -njc --arg dirs "$(ls -d -- */*)" '$dirs | split("\n")')" >> "$GITHUB_OUTPUT"
+
+  test:
+    runs-on: ubuntu-latest
+    name: Test port
+    needs: matrix-output
+    strategy:
+      matrix:
+        port: ${{ fromJson(needs.matrix-output.outputs.matrix) }}
+        freebsd:
+          - "13.3"
+          - "14.0"
+          - "14.1"
+    steps:
+    - uses: actions/checkout@v4
+    - name: Run tests
+      id: test
+      uses: vmactions/freebsd-vm@v1
+      with:
+        usesh: true
+        release: "${{ matrix.freebsd }}"
+        prepare: |
+          pkg install -y \
+            ports-mgmt/porttools
+
+        run: |
+          echo "::group::Clone ports"
+          git clone --depth 1 https://git.FreeBSD.org/ports.git /usr/ports
+          echo "::endgroup::"
+          echo "::group::Install depends"
+          make -C ${{ matrix.port }} build-depends-list | cut -c 12- | xargs pkg install -y
+          echo "::endgroup::"
+          echo "::group::Make test"
+          make -C ${{ matrix.port }} test clean
+          echo "::endgroup::"
+          echo "::group::Porttools test"
+          cd ${{ matrix.port }} && /usr/local/bin/port test
+          echo "::endgroup::"

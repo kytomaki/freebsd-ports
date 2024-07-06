@@ -12,7 +12,7 @@ LICENSE=	LGPL3
 
 MY_DEPENDS=	glib>2:devel/glib20 \
 		curl>0:ftp/curl
-LIB_DEPENDS= 	libcurl.so:ftp/curl \
+LIB_DEPENDS=	libcurl.so:ftp/curl \
 		libglib-2.0.so:devel/glib20
 BUILD_DEPENDS=	${MY_DEPENDS}
 
