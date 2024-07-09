@@ -1,3 +1,3 @@
-TIMESTAMP = 1680003656
-SHA256 (grafana-mimir-mimir-2.7.1_GH0.tar.gz) = 328ccccb67f4cd3f3583e043a0a239e35a34ef95bed003eb516a410932a0b881
-SIZE (grafana-mimir-mimir-2.7.1_GH0.tar.gz) = 21264248
+TIMESTAMP = 1720526649
+SHA256 (grafana-mimir-mimir-2.12.0_GH0.tar.gz) = 51daf870b381766262e3230cbcb69114217a8c64e916ac837823b0bc2fd3fd2f
+SIZE (grafana-mimir-mimir-2.12.0_GH0.tar.gz) = 26506147
