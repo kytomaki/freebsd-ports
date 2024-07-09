@@ -37,7 +37,7 @@ load_rc_config ${name}
 : ${mikrotik_exporter_group:="nobody"}
 
 pidfile=/var/run/mikrotik_exporter.pid
-procname="/usr/local/bin/mikrotik-exporter"
+procname="/usr/local/bin/prometheus-mikrotik-exporter"
 command="/usr/sbin/daemon"
 command_args="-p ${pidfile} ${procname} ${mikrotik_exporter_args} >> ${mikrotik_exporter_log_file}"
 
