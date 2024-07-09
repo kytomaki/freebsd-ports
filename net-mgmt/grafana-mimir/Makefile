@@ -3,7 +3,7 @@
 # vim: ts=8 noet
 
 PORTNAME=		grafana-mimir
-PORTVERSION=		2.7.1
+PORTVERSION=		2.12.0
 DISTVERSIONPREFIX=	mimir-
 CATEGORIES=		net-mgmt
 
@@ -14,17 +14,15 @@ LICENSE=		AGPLv3
 
 CONF_FILE=		grafana_mimir.yml
 
-USES=			go
-
-GO_TARGET=	./cmd/mimir ./cmd/metaconvert ./cmd/mimirtool ./cmd/query-tee
-
-USE_RC_SUBR=		grafana_mimir
+USES=			go:modules
+#GO_MODULE=		github.com/grafana/mimir
+GO_TARGET=		./cmd/mimir ./cmd/metaconvert ./cmd/mimirtool ./cmd/query-tee
 
 USE_GITHUB=		yes
 GH_ACCOUNT=		grafana
 GH_PROJECT=		mimir
 
-GO_PKGNAME=		github.com/${GH_ACCOUNT}/${GH_PROJECT}
+USE_RC_SUBR=		grafana_mimir
 
 PLIST_FILES=		bin/mimir \
 			bin/metaconvert \
