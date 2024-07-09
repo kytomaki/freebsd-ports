@@ -1,0 +1,60 @@
+#!/bin/sh
+
+# $FreeBSD$
+#
+# vim: ts=2 et
+#
+# PROVIDE: grafana_mimir
+# REQUIRE: DAEMON NETWORKING
+# KEYWORD: shutdown
+#
+# Add these lines to /etc/rc.conf.local or /etc/rc.conf
+# to enable this service:
+#
+# grafana_mimir_enable (bool):	Set to NO by default.
+# 					Set it to YES to enable grafana-mimir.
+# grafana_mimir_config (path):	Set to %%PREFIX%%/etc/%%CONF_FILE%%
+# 					by default.
+# grafana_mimir_log_file (path):    grafana-mimir log file
+# 					Default: /var/log/grafana-mimir.log
+# grafana_mimir_user (user):	Set user to run grafana_mimir.
+# 					Default is "nobody".
+# grafana_mimir_group (group):	Set group to run grafana_mimir.
+# 					Default is "nobody".
+
+. /etc/rc.subr
+
+name=grafana_mimir
+rcvar=grafana_mimir_enable
+
+load_rc_config ${name}
+
+: ${grafana_mimir_enable:="NO"}
+: ${grafana_mimir_config="%%PREFIX%%/etc/%%CONF_FILE%%"}
+: ${grafana_mimir_log_file=/var/log/grafana-mimir.log}
+: ${grafana_mimir_args:="-config.file ${grafana_mimir_config} -activity-tracker.filepath /var/db/mimir/metrics-activity.log"}
+: ${grafana_mimir_user:="nobody"}
+: ${grafana_mimir_group:="nobody"}
+
+pidfile=/var/run/grafana_mimir.pid
+procname="%%PREFIX%%/bin/mimir"
+command="/usr/sbin/daemon"
+command_args="-p ${pidfile} ${procname} ${grafana_mimir_args} >> ${grafana_mimir_log_file}"
+
+grafana_mimir_chdir="/var/db/mimir"
+
+required_files=${grafana_mimir_config}
+
+start_precmd=grafana_mimir_startprecmd
+
+grafana_mimir_startprecmd()
+{
+        if [ ! -e ${pidfile} ]; then
+                install -o ${grafana_mimir_user} -g ${grafana_mimir_group} /dev/null ${pidfile};
+        fi
+
+        if [ ! -e ${grafana_mimir_log_file} ]; then
+                install -o ${grafana_mimir_user} -g ${grafana_mimir_group} /dev/null ${grafana_mimir_log_file};
+        fi
+}
+run_rc_command "$1"
