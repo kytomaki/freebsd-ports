@@ -1,0 +1,40 @@
+--- Makefile.orig	2024-07-23 19:15:24 UTC
++++ Makefile
+@@ -8,10 +8,10 @@ INSTALL      := install
+ HTMLFLAGS    := -D build -a toc=left -a toclevels=3 -a sectlinks
+ INSTALL      := install
+ 
+-prefix       := /usr/local
+-DESTDIR      := $(prefix)
+-bindir       := $(DESTDIR)/bin
+-datarootdir  := $(DESTDIR)/share
++DESTDIR      ?= 
++PREFIX       ?= /usr/local
++bindir       := $(DESTDIR)$(PREFIX)/bin
++datarootdir  := $(DESTDIR)$(PREFIX)/share
+ datadir      := $(datarootdir)
+ mandir       := $(datarootdir)/man
+ man1dir      := $(mandir)/man1
+@@ -48,12 +48,12 @@ install: all
+ 	$(ASCIIDOCTOR) $(HTMLFLAGS) $(srcdir)/docs/rink-dates.5.adoc
+ 
+ install: all
+-	$(INSTALL) -Dm 0755 target/release/rink -t $(bindir)
+-	$(INSTALL) -Dm 0644 $(srcdir)/core/definitions.units -t $(datadir)/rink
+-	$(INSTALL) -Dm 0644 $(srcdir)/core/datepatterns.txt -t $(datadir)/rink
+-	$(INSTALL) -Dm 0644 $(srcdir)/core/currency.units -t $(datadir)/rink
+-	$(INSTALL) -Dm 0644 build/rink.1 -t $(man1dir)
+-	$(INSTALL) -Dm 0644 build/rink.5 -t $(man5dir)
+-	$(INSTALL) -Dm 0644 build/rink.7 -t $(man7dir)
+-	$(INSTALL) -Dm 0644 build/rink-defs.5 -t $(man5dir)
+-	$(INSTALL) -Dm 0644 build/rink-dates.5 -t $(man5dir)
++	$(INSTALL) target/release/rink $(bindir)
++	$(INSTALL) -d $(datadir)/rink
++	$(INSTALL) -m 0644 $(srcdir)/core/definitions.units $(datadir)/rink
++	$(INSTALL) -m 0644 $(srcdir)/core/datepatterns.txt $(datadir)/rink
++	$(INSTALL) -m 0644 $(srcdir)/core/currency.units $(datadir)/rink
++	$(INSTALL) -m 0644 build/rink.1 $(man1dir)
++	$(INSTALL) -m 0644 build/rink.5 $(man5dir)
++	$(INSTALL) -m 0644 build/rink.7 $(man7dir)
++	$(INSTALL) -m 0644 build/rink-defs.5 $(man5dir)
++	$(INSTALL) -m 0644 build/rink-dates.5 $(man5dir)
