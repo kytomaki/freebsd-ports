@@ -1,0 +1,8 @@
+bin/rink
+share/man/man1/rink.1.gz
+share/man/man5/rink-defs.5.gz
+share/man/man5/rink.5.gz
+share/man/man7/rink.7.gz
+share/rink/currency.units
+share/rink/datepatterns.txt
+share/rink/definitions.units

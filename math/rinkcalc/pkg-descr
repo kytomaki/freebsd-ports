@@ -1,0 +1,6 @@
+Rink is an open source unit-aware calculator. It can be used for physics
+and engineering calculations, as well as dimensionality analysis.
+
+Rink supports most systems of measurements including SI, CGS, natural,
+international customary, US customary, UK customary, as well as historical
+measurements. In addition, Rink supports currency conversions.
