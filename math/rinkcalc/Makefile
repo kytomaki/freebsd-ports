@@ -7,7 +7,7 @@ WWW=			https://rinkcalc.app/about
 MAINTAINER=		kytomaki@iki.fi
 COMMENT=		Unit conversion tool and library
 
-LICENSE=		MPL20 MIT BSD3CLAUSE APACHE20 BSL
+LICENSE=		MPL20
 
 USES=			cargo ssl gmake
 USE_GITHUB=		yes
