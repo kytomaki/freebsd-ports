@@ -10,10 +10,12 @@ jobs:
       matrix: ${{ steps.matrix.outputs.matrix }}
     steps:
     - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
     - name: Create matrix
       id: matrix
       run: |
-        echo "matrix=$(jq -njc --arg dirs "$(git diff --dirstat=files,0 master | sed -E 's/[ 0-9.]+% //g' | cut -d'/' -f1,2 | sort -u)" '$dirs | split("\n")')" >> "$GITHUB_OUTPUT"
+        echo "matrix=$(jq -njc --arg dirs "$(git diff --dirstat=files,0 origin/master -- | sed -E 's/[ 0-9.]+% //g' | cut -d'/' -f1,2 | sort -u)" '$dirs | split("\n")')" >> "$GITHUB_OUTPUT"
 
   test:
     runs-on: ubuntu-latest
