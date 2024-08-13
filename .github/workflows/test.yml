@@ -10,10 +10,12 @@ jobs:
       matrix: ${{ steps.matrix.outputs.matrix }}
     steps:
     - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
     - name: Create matrix
       id: matrix
       run: |
-        echo "matrix=$(jq -njc --arg dirs "$(git diff --dirstat=files,0 master | sed -E 's/[ 0-9.]+% //g' | cut -d'/' -f1,2 | sort -u)" '$dirs | split("\n")')" >> "$GITHUB_OUTPUT"
+        echo "matrix=$(jq -njc --arg dirs "$(git diff --dirstat=files,0 origin/master -- | sed -E 's/[ 0-9.]+% //g' | cut -d'/' -f1,2 | sort -u | grep -v '.github/')" '$dirs | split("\n")')" >> "$GITHUB_OUTPUT"
 
   test:
     runs-on: ubuntu-latest
@@ -43,12 +45,21 @@ jobs:
           echo "::group::Clone ports"
           git clone --depth 1 https://git.FreeBSD.org/ports.git /usr/ports
           echo "::endgroup::"
+          echo "::group::portlint"
+          (cd ${{ matrix.port }} && /usr/local/bin/portlint -A)
+          echo "::endgroup::"
           echo "::group::Install depends"
           make -C ${{ matrix.port }} build-depends-list | cut -c 12- | xargs pkg install -y
           echo "::endgroup::"
           echo "::group::Make test"
-          make -C ${{ matrix.port }} test clean
+          make -C ${{ matrix.port }} test
           echo "::endgroup::"
-          echo "::group::Porttools test"
-          cd ${{ matrix.port }} && /usr/local/bin/port test
+          echo "::group::Make stage"
+          make -C ${{ matrix.port }} stage
+          echo "::endgroup::"
+          echo "::group::Make check-plist"
+          make -C ${{ matrix.port }} check-plist
+          echo "::endgroup::"
+          echo "::group::Make stage-qa"
+          make -C ${{ matrix.port }} stage-qa
           echo "::endgroup::"
