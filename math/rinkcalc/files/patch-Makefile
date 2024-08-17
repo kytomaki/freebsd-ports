@@ -1,4 +1,4 @@
---- Makefile.orig	2024-07-23 19:15:24 UTC
+--- Makefile.orig	2024-08-17 09:39:50 UTC
 +++ Makefile
 @@ -8,10 +8,10 @@ INSTALL      := install
  HTMLFLAGS    := -D build -a toc=left -a toclevels=3 -a sectlinks
@@ -15,7 +15,16 @@
  datadir      := $(datarootdir)
  mandir       := $(datarootdir)/man
  man1dir      := $(mandir)/man1
-@@ -48,12 +48,12 @@ install: all
+@@ -19,7 +19,7 @@ srcdir       := .
+ man7dir      := $(mandir)/man7
+ srcdir       := .
+ 
+-RINK_PATH    := $(prefix)/share/rink
++RINK_PATH    := $(PREFIX)/share/rink
+ export RINK_PATH
+ 
+ all: bin man
+@@ -48,12 +48,13 @@ install: all
  	$(ASCIIDOCTOR) $(HTMLFLAGS) $(srcdir)/docs/rink-dates.5.adoc
  
  install: all
