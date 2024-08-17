@@ -1,11 +1,11 @@
---- cli/src/config.rs.orig	2024-08-17 08:57:14 UTC
+--- cli/src/config.rs.orig	2024-08-17 09:10:37 UTC
 +++ cli/src/config.rs
-@@ -289,7 +289,7 @@ pub fn load(config: &Config) -> Result<Context> {
-     if let Some(prefix) = option_env!("RINK_PATH") {
+@@ -290,6 +290,9 @@ pub fn load(config: &Config) -> Result<Context> {
          search_path.push(prefix.into());
      }
-
-+    search_path.push(PathBuf::from("/usr/local/share/rink")
+ 
++    // FreeBSD share
++    search_path.push(PathBuf::from("/usr/local/share/rink"));
 +
      // Read definitions.units
      let units = read_from_search_path("definitions.units", &search_path)
