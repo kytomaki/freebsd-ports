@@ -10,7 +10,7 @@ LICENSE=	AGPLv3
 
 LIB_DEPENDS=	libsodium.so:security/libsodium
 
-USES=		go:modules libtool
+USES=		go:modules libtool pkgconfig
 USE_GITHUB=	yes
 GH_ACCOUNT=	ente-io
 GH_PROJECT=	ente
