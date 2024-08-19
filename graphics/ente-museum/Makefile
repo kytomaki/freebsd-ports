@@ -5,6 +5,7 @@ CATEGORIES=	graphics
 
 MAINTAINER=	kytomaki@iki.fi
 COMMENT=	End to End Encrypted alternative to Google Photos and Apple Photos
+WWW=		https://ente.io/
 
 LICENSE=	AGPLv3
 
