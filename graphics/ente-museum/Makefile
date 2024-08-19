@@ -1,6 +1,5 @@
 PORTNAME=	ente-museum
-PORTVERSION=	1.7.2
-DISTVERSIONPREFIX=	photosd-v
+PORTVERSION=	1.0.0.a.20240819
 CATEGORIES=	graphics
 
 MAINTAINER=	kytomaki@iki.fi
@@ -9,11 +8,20 @@ WWW=		https://ente.io/
 
 LICENSE=	AGPLv3
 
-USES=			go:modules
-USE_GITHUB=		yes
-GH_ACCOUNT=		ente-io
-GH_PROJECT=		ente
+LIB_DEPENDS=	libsodium.so:security/libsodium
 
-GO_TARGETS=		server/cmd/museum 
+USES=		go:modules libtool
+USE_GITHUB=	yes
+GH_ACCOUNT=	ente-io
+GH_PROJECT=	ente
+GH_TAGNAME=	cdbf8c5f0971cb383df03c6b2f72ffb85387beef
+
+WRKSRC_SUBDIR=		server
+
+GO_TARGET=		./cmd/museum:museum
+
+# This is really clunky
+post-extract:
+	(cd ${WRKSRC}; ${GO_CMD} mod vendor)
 
 .include <bsd.port.mk>
