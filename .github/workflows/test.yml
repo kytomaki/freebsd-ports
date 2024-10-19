@@ -21,6 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Test port
     needs: matrix-output
+    if: needs.matrix-output.outputs.matrix != '[]'
     strategy:
       matrix:
         port: ${{ fromJson(needs.matrix-output.outputs.matrix) }}
