@@ -24,4 +24,6 @@ GO_TARGET=		./cmd/museum:museum
 post-extract:
 	(cd ${WRKSRC}; ${GO_CMD} mod vendor)
 
+test: ENV=test
+
 .include <bsd.port.mk>
