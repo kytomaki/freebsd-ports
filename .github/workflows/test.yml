@@ -23,6 +23,7 @@ jobs:
     needs: matrix-output
     if: needs.matrix-output.outputs.matrix != '[]'
     strategy:
+      fail-fast: false
       matrix:
         port: ${{ fromJson(needs.matrix-output.outputs.matrix) }}
         freebsd:
