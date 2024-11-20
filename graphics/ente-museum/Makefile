@@ -1,5 +1,5 @@
 PORTNAME=	ente-museum
-PORTVERSION=	1.0.0.a.20240819
+PORTVERSION=	1.0.0.a.20241120
 CATEGORIES=	graphics
 
 MAINTAINER=	kytomaki@iki.fi
@@ -14,7 +14,8 @@ USES=		go:modules libtool pkgconfig
 USE_GITHUB=	yes
 GH_ACCOUNT=	ente-io
 GH_PROJECT=	ente
-GH_TAGNAME=	cdbf8c5f0971cb383df03c6b2f72ffb85387beef
+# ente uses rolling tag `server/ghcr`
+GH_TAGNAME=	b0674cd5f37cebda0f446db7ce1e87a3e6d8b9fc
 
 WRKSRC_SUBDIR=		server
 
