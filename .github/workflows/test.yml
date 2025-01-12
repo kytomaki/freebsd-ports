@@ -44,8 +44,9 @@ jobs:
 
         run: |
           set -e
-          echo "::group::Clone ports"
+          echo "::group::Clone ports and configure git"
           git clone --depth 1 https://git.FreeBSD.org/ports.git /usr/ports
+          git config --global --add safe.directory "${{ github.GITHUB_WORKSPACE }}"
           echo "::endgroup::"
           echo "::group::portlint"
           (cd ${{ matrix.port }} && /usr/local/bin/portlint -A)
