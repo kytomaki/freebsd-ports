@@ -35,9 +35,12 @@ jobs:
     - name: Run tests
       id: test
       uses: vmactions/freebsd-vm@v1
+      env:
+        OPTIONS_UNSET: X11 FONTCONFIG NLS DEBUG EXAMPLES INFO TEST PANGOCAIRO BASH LIBSIGSEGV CUPS FOP JAPANESE DEMOS MYSQL DOCS GDB LTO PORT_LLVM SOURCES WASM
       with:
         usesh: true
         release: "${{ matrix.freebsd }}"
+        envs: 'OPTIONS_UNSET'
         prepare: |
           pkg install -y \
             ports-mgmt/porttools \
