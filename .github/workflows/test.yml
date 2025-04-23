@@ -28,7 +28,7 @@ jobs:
         port: ${{ fromJson(needs.matrix-output.outputs.matrix) }}
         freebsd:
           - "13.4"
-          - "14.1"
+          - "13.5"
           - "14.2"
     steps:
     - uses: actions/checkout@v4
