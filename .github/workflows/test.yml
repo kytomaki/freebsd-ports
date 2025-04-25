@@ -35,10 +35,18 @@ jobs:
     - name: Run tests
       id: test
       uses: vmactions/freebsd-vm@v1
+      env:
+        OPTIONS_UNSET: X11 FONTCONFIG NLS DEBUG EXAMPLES INFO TEST PANGOCAIRO BASH LIBSIGSEGV CUPS FOP JAPANESE DEMOS MYSQL DOCS GDB LTO PORT_LLVM SOURCES WASM
       with:
         usesh: true
         release: "${{ matrix.freebsd }}"
+        envs: 'OPTIONS_UNSET'
         prepare: |
+          pkg install -y \
+            pkg
+          mkdir -p /usr/local/etc/pkg/repos
+          echo 'FreeBSD: { url: "pkg+http://pkg.FreeBSD.org/${ABI}/latest" }' > /usr/local/etc/pkg/repos/FreeBSD.conf
+          pkg upgrade -y
           pkg install -y \
             ports-mgmt/porttools \
             ports-mgmt/portconfig \
@@ -46,6 +54,7 @@ jobs:
 
         run: |
           set -e
+          cat /usr/local/etc/pkg/repos/FreeBSD.conf
           echo "::group::Clone ports and configure git"
           git clone --depth 1 https://git.FreeBSD.org/ports.git /usr/ports
           git config --global --add safe.directory "${{ github.GITHUB_WORKSPACE }}"

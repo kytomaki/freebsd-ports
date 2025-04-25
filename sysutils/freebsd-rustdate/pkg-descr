@@ -1,0 +1,3 @@
+Freebsd-rustdate, a reimplementation of freebsd-update. It's
+primarily written because of how slow freebsd-update is, and
+is written in rust because I felt like it.
