@@ -45,7 +45,7 @@ jobs:
           pkg install -y \
             pkg
           mkdir -p /usr/local/etc/pkg/repos
-          echo echo 'FreeBSD: { url: "pkg+http://pkg.FreeBSD.org/${ABI}/latest" }' > /usr/local/etc/pkg/repos/FreeBSD.conf
+          echo 'FreeBSD: { url: "pkg+http://pkg.FreeBSD.org/${ABI}/latest" }' > /usr/local/etc/pkg/repos/FreeBSD.conf
           pkg upgrade -y
           pkg install -y \
             ports-mgmt/porttools \
