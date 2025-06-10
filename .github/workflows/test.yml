@@ -30,6 +30,7 @@ jobs:
           - "13.4"
           - "13.5"
           - "14.2"
+          - "14.3"
     steps:
     - uses: actions/checkout@v4
     - name: Run tests
