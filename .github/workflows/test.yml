@@ -48,6 +48,7 @@ jobs:
         release: "${{ matrix.freebsd }}"
         prepare: |
           pkg install -y \
+            devel/git \
             ports-mgmt/porttools \
             ports-mgmt/portconfig \
             ports-mgmt/portconf
